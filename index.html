@@ -1,46 +1,41 @@
+
+
 <!DOCTYPE html>
 <html>
 <head>
   <title>Audio Player</title>
 </head>
 <body>
-  <audio controls>
+  <audio id="audio" controls>
     <source src="rec.mp3" type="audio/mpeg">
     Your browser does not support the audio tag.
   </audio>
+  <button id="play-button">Play</button>
+  <div id="lyrics"></div>
+  <script>
+    const lyrics = [
+      { time: 0, text: "In the morning light, I see your face" },
+      { time: 5, text: "A gentle smile, a warm and loving place" },
+      { time: 10, text: "The world outside fades away" },
+      { time: 15, text: "As I hold you close, I feel at home" },
+      // Add more lyrics here...
+    ];
+
+    const audio = document.getElementById('audio');
+    const lyricsDiv = document.getElementById('lyrics');
+    const playButton = document.getElementById('play-button');
+
+    playButton.addEventListener('click', () => {
+      audio.play();
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const currentTime = audio.currentTime;
+      const currentLyric = lyrics.find((lyric) => currentTime >= lyric.time && (!lyric.endTime || currentTime < lyric.endTime));
+      if (currentLyric) {
+        lyricsDiv.innerText = currentLyric.text;
+      }
+    });
+  </script>
 </body>
 </html>
-<audio id="audio">
-  <source src="rec.mp3" type="audio/mpeg">
-  Your browser does not support the audio tag.
-</audio>
-
-<button id="play-button">Play</button>
-
-<div id="lyrics"></div>
-
-<script>
-  const lyrics = [
-    { time: 0, text: "In the morning light, I see your face" },
-    { time: 5, text: "A gentle smile, a warm and loving place" },
-    { time: 10, text: "The world outside fades away" },
-    { time: 15, text: "As I hold you close, I feel at home" },
-    // Add more lyrics here...
-  ];
-
-  const audio = document.getElementById('audio');
-  const lyricsDiv = document.getElementById('lyrics');
-  const playButton = document.getElementById('play-button');
-
-  playButton.addEventListener('click', () => {
-    audio.play();
-  });
-
-  audio.addEventListener('timeupdate', () => {
-    const currentTime = audio.currentTime;
-    const currentLyric = lyrics.find((lyric) => currentTime >= lyric.time && (!lyric.endTime || currentTime < lyric.endTime));
-    if (currentLyric) {
-      lyricsDiv.innerText = currentLyric.text;
-    }
-  });
-</script>
