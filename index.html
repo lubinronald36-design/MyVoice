@@ -1,9 +1,17 @@
 
-
 <!DOCTYPE html>
 <html>
 <head>
   <title>Audio Player</title>
+  <style>
+    #lyrics {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
   <audio id="audio" controls>
@@ -31,9 +39,11 @@
 
     audio.addEventListener('timeupdate', () => {
       const currentTime = audio.currentTime;
-      const currentLyric = lyrics.find((lyric) => currentTime >= lyric.time && (!lyric.endTime || currentTime < lyric.endTime));
+      const currentLyric = lyrics.find((lyric) => currentTime >= lyric.time && (!lyric.endTime || currentTime < (lyric.time + 5)));
       if (currentLyric) {
         lyricsDiv.innerText = currentLyric.text;
+      } else {
+        lyricsDiv.innerText = '';
       }
     });
   </script>
